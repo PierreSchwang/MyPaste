@@ -1,4 +1,6 @@
 # MyPaste - Open Source Paste Server
+![Docker Hub Build Status](https://img.shields.io/docker/cloud/build/pierreschwang/mypaste)
+<br />
 MyPaste is an open-source paste server written in NodeJS using express, the twig template engine and TypeScript.
 
 ## Todo
