@@ -1,11 +1,12 @@
 import {PathLike} from "fs";
-import * as fs from 'fs';
+import * as fs from "fs";
 
 export class FileLoader {
 
     public loadJsonObject(path: PathLike): any {
-        if(!this.exists(path))
+        if (!this.exists(path)) {
             return null;
+        }
         return JSON.parse(fs.readFileSync(path).toString());
     }
 

@@ -1,3 +1,3 @@
 import {MyPaste} from "./MyPaste";
 
-new MyPaste();
+const instance = new MyPaste();

@@ -1,12 +1,12 @@
-import {PasteConfig} from "./data/PasteConfig";
+import cookieParser from "cookie-parser";
+import * as e from "express";
+import express from "express";
+import lessMiddleware from "less-middleware";
+import logger from "morgan";
+import path from "path";
 import {FileLoader} from "./data/FileLoader";
-import {init} from './RouteController';
-import * as e from 'express';
-import express from 'express';
-import path from 'path';
-import cookieParser from 'cookie-parser';
-import lessMiddleware from 'less-middleware';
-import logger from 'morgan';
+import {PasteConfig} from "./data/PasteConfig";
+import {init} from "./RouteController";
 
 export class MyPaste {
 
@@ -20,30 +20,30 @@ export class MyPaste {
         init(this.app, this.config);
         this.app.listen(this.config.port, this.config.host, () => {
             console.log(`server started at ${this.config.host}:${this.config.port}`);
-        })
+        });
     }
 
     private startWebserver(): e.Application {
         const app = express();
-        app.set('views', path.join(__dirname, 'views'));
-        app.set('view engine', 'twig');
-        app.use(logger('dev'));
+        app.set("views", path.join(__dirname, "views"));
+        app.set("view engine", "twig");
+        app.use(logger("dev"));
         app.use(e.json());
         app.use(e.urlencoded({extended: false}));
         app.use(cookieParser());
-        app.use(lessMiddleware(path.join(__dirname, 'public')));
-        app.use(e.static(path.join(__dirname, 'public')));
+        app.use(lessMiddleware(path.join(__dirname, "public")));
+        app.use(e.static(path.join(__dirname, "public")));
         return app;
     }
 
     private loadStorage(): PasteConfig {
-        if (!this.fileLoader.exists('./storage')) {
-            this.fileLoader.mkdir('./storage');
+        if (!this.fileLoader.exists("./storage")) {
+            this.fileLoader.mkdir("./storage");
         }
-        if (!this.fileLoader.exists('./storage/config.json')) {
-            this.fileLoader.write('./storage/config.json', JSON.stringify(new PasteConfig()));
+        if (!this.fileLoader.exists("./storage/config.json")) {
+            this.fileLoader.write("./storage/config.json", JSON.stringify(new PasteConfig()));
         }
-        return this.fileLoader.loadJsonObject('./storage/config.json');
+        return this.fileLoader.loadJsonObject("./storage/config.json");
     }
 
 }
