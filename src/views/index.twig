@@ -1,6 +1,31 @@
 {% extends 'layout.twig' %}
+{% block bodyClass %}padding{% endblock %}
 
 {% block body %}
-  <h1>{{title}}</h1>
-  <p>Welcome to {{title}}</p>
+  <div id="arrow">
+    >
+  </div>
+  <textarea spellcheck="false"></textarea>
+  <div id="buttons">
+    <button><img src="icons/save.svg" alt="Save"></button>
+  </div>
+  <script>
+    window.onload = () => {
+      document.getElementsByTagName("button")[0].onclick = () => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/create", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if(xhr.status === 200) {
+              window.location.href = "/" + xhr.responseText;
+              return;
+            }
+            console.log(xhr.responseText);
+          }
+        };
+        xhr.send(JSON.stringify({content: document.getElementsByTagName("textarea")[0].value}));
+      }
+    }
+  </script>
 {% endblock %}

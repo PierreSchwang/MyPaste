@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{{ title }}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    {% block body %}{% endblock %}
-  </body>
+<head>
+    <title>{{ title }} - MyPaste</title>
+    <script src="https://kit.fontawesome.com/d1c443bcb5.js" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body class="{% block bodyClass %}{% endblock %}">
+{% block body %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<script src="/scripts/main.js"></script>
+</body>
 </html>

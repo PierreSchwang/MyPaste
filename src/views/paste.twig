@@ -1,0 +1,10 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    {% if error %}
+        {{ error }}
+    {% endif %}
+    {% if data %}
+        <pre class="prettyprint linenums">{{ data.content|escape }}</pre>
+    {% endif %}
+{% endblock %}

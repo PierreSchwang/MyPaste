@@ -6,21 +6,28 @@ import logger from "morgan";
 import path from "path";
 import {FileLoader} from "./data/FileLoader";
 import {PasteConfig} from "./data/PasteConfig";
+import PasteLoader from "./data/PasteLoader";
 import {init} from "./RouteController";
 
 export class MyPaste {
 
     private fileLoader: FileLoader = new FileLoader();
+    private readonly pasteLoader: PasteLoader;
     private readonly config: PasteConfig;
     private readonly app: e.Application;
 
     constructor() {
         this.config = this.loadStorage();
+        this.pasteLoader = new PasteLoader(this.config);
         this.app = this.startWebserver();
-        init(this.app, this.config);
+        init(this.app, this);
         this.app.listen(this.config.port, this.config.host, () => {
             console.log(`server started at ${this.config.host}:${this.config.port}`);
         });
+    }
+
+    public getPasteLoader(): PasteLoader {
+        return this.pasteLoader;
     }
 
     private startWebserver(): e.Application {

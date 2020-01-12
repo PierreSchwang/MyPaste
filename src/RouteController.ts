@@ -1,17 +1,10 @@
 import * as express from "express";
-import {IndexController} from "./controller/IndexController";
-import {InstallController} from "./controller/InstallController";
-import {PasteConfig} from "./data/PasteConfig";
+import {CreatePasteController, IndexController} from "./controller/IndexController";
+import {PasteController} from "./controller/PasteController";
+import {MyPaste} from "./MyPaste";
 
-export const init = (app: express.Application, pasteConfig: PasteConfig) => {
-
-    app.use((req, res, next) => {
-        if (pasteConfig.installed || req.path.indexOf("/install") > -1) {
-            return next();
-        }
-        res.redirect("/install");
-    });
-
+export const init = (app: express.Application, paste: MyPaste) => {
     app.get("/", IndexController);
-    app.get("/install", InstallController);
+    app.post("/create", (req, res) => CreatePasteController(req, res, paste));
+    app.get("/:id", (req, res) => PasteController(req, res, paste));
 };
