@@ -5,13 +5,12 @@
 MyPaste is an open-source paste server written in NodeJS using express, the twig template engine and TypeScript.
 
 ## Todo
- + Install Page
- + Authentication Integration
-    + User-Management
-    + Password hashing
- + Multiple Paste-Storage-Systems (Priority is File-System)
- + View / Create Pastes
- + Encrypt / secure pastes (with password)
++ Authentication Integration
+   + User-Management
+   + Password hashing
++ Multiple Paste-Storage-Systems (Priority is File-System)
++ View / Create Pastes ✓
++ Encrypt / secure pastes (with password)
  
  # Development
  To use MyPaste, NodeJS and Git must be installed on the system. 

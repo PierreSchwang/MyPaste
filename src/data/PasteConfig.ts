@@ -1,5 +1,4 @@
 export class PasteConfig {
-    public installed: boolean = false;
     public host: string = "localhost";
     public port: number = 1337;
     public auth: boolean = false;

@@ -24,6 +24,9 @@ export default class PasteLoader {
 
     public createPaste(content: string, secret?: string): Promise<IPaste> {
         return new Promise<IPaste>((resolve, reject) => {
+            if (content.length > this.config.maxChars) {
+                return reject("EXCEEDED_MAXIMUM_CHAR_AMOUNT");
+            }
             this.generateId().then((value) => {
                 this.dataStore.insert({
                     content,
@@ -31,7 +34,7 @@ export default class PasteLoader {
                     secret,
                 }, (err, document) => {
                     if (err) {
-                        reject(err);
+                        return reject(err);
                     } else {
                         resolve(document);
                     }
@@ -41,10 +44,28 @@ export default class PasteLoader {
     }
 
     private generateId(): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            const id = this.randomString(this.config.keyLength);
-            // TODO: duplicate check
+        return new Promise<string>(async (resolve, reject) => {
+            let id = this.randomString(this.config.keyLength);
+            let counter = 0;
+            while (!await this.isIdAvailable(id)) {
+                if (counter > 250) {
+                    return reject("ID_GENERATION_ERROR");
+                }
+                id = this.randomString(this.config.keyLength);
+                counter++;
+            }
             resolve(id);
+        });
+    }
+
+    private isIdAvailable(id: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            this.dataStore.count({id}, (err, n) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(n < 1);
+            });
         });
     }
 

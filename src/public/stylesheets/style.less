@@ -8,11 +8,13 @@ body {
 
 #arrow {
   left: 0;
-  top: 17px;
+  top: 20px;
   width: 30px;
   text-align: right;
   color: #7d7d7d;
   position: absolute;
+  z-index: -999;
+  font-family: monospace;
 }
 
 textarea {
@@ -129,7 +131,7 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
 
 @media print {
   pre.prettyprint {
-    background-color: none
+    background-color: transparent;
   }
 
   pre .str, code .str {
